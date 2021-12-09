@@ -1,0 +1,119 @@
+.footer {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.pd-0 {
+    padding: 0px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+#dataTable_wrapper select, #dataTable_wrapper input {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 7px;
+    font-size: 14px;
+}
+
+.dataTable {
+    border: none;
+}
+
+.table-data thead th, .table-data thead td {
+    border-bottom: 1px solid #ddd !important;
+    white-space: nowrap !important;
+}
+
+.table-data tbody tr {
+    border: none;
+}
+
+table.dataTable.no-footer {
+    border: none;
+}
+
+.table-data tbody th, .table-data tbody td {
+    border: none !important;
+    border-bottom: 1px solid #dcdef1 !important;
+    font-size: 12px;
+    color: #1F3775;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover, .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #1f3775;
+    color: #fff !important;
+    border: none;
+    border-radius: 10px;
+    padding: 7px 15px;
+    font-size: 14px;
+}
+
+.table-data thead th {
+    background: none;
+    border: none !important;
+    border-bottom: 1px solid #dcdef1 !important;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: #1F3775;
+}
+
+.dataTables_length, .dataTables_filter {
+    margin: 16px 25px 4px;
+}
+
+.dataTables_info, .dataTables_paginate {
+    margin: 16px 25px;
+}
+
+table tr th, table tr td {
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9fafe;
+}
+
+
+.table-striped > tbody > tr:nth-of-type(even) > * {
+    background: #fff;
+    --tblr-table-accent-bg: none;
+}
+
+.modal-blur {
+    background: #0000005c;
+    backdrop-filter: unset;
+}
+
+form {
+    margin-bottom: 0px;
+}
+
+.modal-footer {
+    background: #fff;
+    padding-top: 13px;
+    border-top: 1px solid #e6e7e9;
+}
+
+#modal-loading .modal-content {
+    background: transparent;
+    text-align: center;
+    display: block;
+}
+
+#modal-loading .modal-content img {
+    width: 250px;
+}
+
+#modal-loading.modal-blur {
+    backdrop-filter: blur(4px) !important;
+    background: unset;
+}
+.mr-10{
+    margin-right: 10px;
+}

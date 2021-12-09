@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+    {{ template "head.html" .}}
+</head>
+<body class="antialiased border-top-wide border-primary d-flex flex-column">
+<div class="page page-center">
+    <div class="container-tight py-4">
+        <div class="text-center mb-4">
+            <a href="."><img src="/assets/img/logo.svg" height="36" alt=""></a>
+        </div>
+        <form class="card card-md" action="/login" method="POST" id="form-login" autocomplete="off">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Login to your account</h2>
+                <div class="mb-3">
+                    <label class="form-label">Email address</label>
+                    <input type="email" name="email" class="form-control" placeholder="Enter email">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">
+                        Password
+                    </label>
+                    <div class="input-group input-group-flat">
+                        <input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-loading" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <img src="/assets/img/loading.gif" alt="">
+        </div>
+    </div>
+</div>
+
+{{ template "script.html" .}}
+<script>
+    $(function () {
+        $('#form-login').on('submit', function (e) {
+            e.preventDefault();
+            ToggleLoading();
+
+            var formdata = null;
+            if (window.FormData) {
+                formdata = new FormData($('#form-login')[0]);
+            }
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: $(this).attr('action'),
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function (respon) {
+                    if (respon.status === 200) {
+                        window.location.href = "/todo"
+                    }else{
+                        Swal.fire(
+                                '',
+                                respon.message,
+                                'error'
+                        )
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    setTimeout(() => {
+                        Swal.fire(
+                                '',
+                                textStatus +" "+errorThrown,
+                                'error'
+                        )
+                        ToggleLoading()
+                    }, 450)
+                }
+            });
+        })
+    })
+</script>
+</body>
+</html>
+

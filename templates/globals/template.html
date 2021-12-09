@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+    {{ template "head.html" .}}
+</head>
+<body class="antialiased">
+<div class="wrapper">
+
+    {{ template "header.html" .}}
+
+    {{ template "navbar.html" .}}
+
+    <div class="page-wrapper">
+        <div class="container-xl" style="padding-bottom: 130px;">
+            {{range $key, $value := .message}}
+            <div class="alert alert-{{$value.type}} alert-dismissible fade show" role="alert" style="margin-top: 15px">
+                {{$value.message}}
+            </div>
+            {{end}}
+
+            {{block "content" .}}{{end}}
+        </div>
+
+        {{ template "footer.html" .}}
+
+    </div>
+
+</div>
+
+<div class="modal modal-blur fade" id="modal-loading" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <img src="/assets/img/loading.gif" alt="">
+        </div>
+    </div>
+</div>
+
+{{ template "script.html" .}}
+{{block "script" .}}{{end}}
+</body>
+</html>
+

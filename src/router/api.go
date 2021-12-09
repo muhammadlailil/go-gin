@@ -3,20 +3,19 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	todoscontroller "todos-apps/src/controller/todos"
 	"todos-apps/src/restcontroller"
 )
 
-func ApiRouter(router *gin.RouterGroup)  {
-	router.POST("/login",restcontroller.PostLogin)
-	router.GET("/todo",todoscontroller.ListTodo)
-	router.POST("/todo/create",todoscontroller.CreateTodo)
-	router.PATCH("/todo/update",todoscontroller.UpdateTodo)
-	router.DELETE("/todo/delete/:id",todoscontroller.DeleteTodo)
+func ApiRouter(router *gin.RouterGroup) {
+	router.POST("/login", restcontroller.PostLogin)
+	router.GET("/todo", restcontroller.ListTodo)
+	router.POST("/todo/create", restcontroller.CreateTodo)
+	router.PATCH("/todo/update", restcontroller.UpdateTodo)
+	router.DELETE("/todo/delete/:id", restcontroller.DeleteTodo)
 
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"status" : 1,
+			"status":  1,
 			"message": "Hello World !",
 		})
 	})

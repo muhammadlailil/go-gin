@@ -1,0 +1,168 @@
+{{template "template.html" .}}
+
+{{define "content"}}
+
+<div class="page-header d-print-none">
+    <div class="row align-items-center">
+        <div class="col">
+            <!-- Page pre-title -->
+            <div class="page-pretitle">
+                Overview
+            </div>
+            <h2 class="page-title">
+                {{.page_title}}
+            </h2>
+        </div>
+        <!-- Page title actions -->
+        <div class="col-auto ms-auto d-print-none">
+            <div class="btn-list">
+                <button id="btnGroupDrop1" type="button" class="btn btn-default d-none d-sm-inline-block" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Export Data
+                </button>
+                <div class="dropdown-menu dropdown-menu-end" style="">
+                    <a class="dropdown-item" href="/todo/export?type=excel">
+                        Excel
+                    </a>
+                    <a class="dropdown-item" href="/todo/export?type=pdf">
+                        PDF
+                    </a>
+                </div>
+                <a href="javascript:;" class="btn btn-primary d-none d-sm-inline-block" onclick="ShowFormAdd()">
+                    Add Data
+                </a>
+                <a href="javascript:;" class="btn btn-primary d-none d-sm-inline-block" onclick="ShowFormImport()">
+                    Import Data
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Todos List</h3>
+    </div>
+    <div class="card-body pd-0">
+        <div class="table-responsive table-data">
+            <table id="dataTable" width="100%" class="table card-table table-vcenter text-nowrap datatable table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Todo</th>
+                    <th>Status</th>
+                    <th class="text-right">#</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal modal-blur fade" id="modal-form" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="/todo/save" method="POST" id="form-data">
+                <input type="hidden" class="form-control" name="id">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add a new Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Todo</label>
+                        <textarea class="form-control" name="title" placeholder="Masukkan todo anda ..." required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <div>
+                            <label class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" checked="" value="false" name="completed" required>
+                                <span class="form-check-label">Progress</span>
+                            </label>
+                            <label class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="completed" value="true" required>
+                                <span class="form-check-label">Complate</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-import" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="/todo/import" method="POST" id="form-import" enctype="multipart/form-data">
+                <input type="hidden" class="form-control" name="id">
+                <div class="modal-header">
+                    <h5 class="modal-title">Import Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Excel File</label>
+                        <input type="file" name="file" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "script"}}
+<script>
+    $(function () {
+        CreateDataTable({
+            "ajax": {
+                "url": '/todo/data-table',
+                "dataType": "json",
+                "type": "POST"
+            },
+            "columns": [
+                {"data": "id"},
+                {"data": "title"},
+                {"data": "completed"},
+                {"data": "action"},
+            ],
+            "columnDefs": [{
+                "targets": 3,
+                "orderable": false,
+                "render": function (data, type, row, meta) {
+                    var action = `<div class="text-right"><a href="javascript:;"  class="btn btn-sm btn-danger mr-10" onclick="ConfirmDelete('/todo/delete','${row.id}')">Hapus</a>`;
+                    action += `<a href="javascript:;"  class="btn btn-sm btn-primary" onclick="showEdit('${Encode(JSON.stringify(row))}')">Edit</a></div>`;
+                    return action
+                }
+            }, {
+                "targets": 2,
+                "render": function (data, type, row, meta) {
+                    if (row.completed.toString() === 'true') {
+                        return `<span  class="badge bg-success">Complate</span>`;
+                    } else {
+                        return `<span  class="badge bg-warning">Progress</span>`;
+                    }
+                }
+            }],
+            "order": [[0, "desc"]]
+        })
+    })
+
+
+    function showEdit(data) {
+        data = JSON.parse(Decode(data))
+        ShowFormEdit(data)
+    }
+</script>
+{{end}}

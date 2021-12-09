@@ -7,15 +7,15 @@
 [✅] Hit API Lain <br>
 [✅] Helper <br>
 [✅] Middleware <br>
-[✅] Environment Concept (seperti cara kerja .env laravel) <br>
+[✅] Environment Concept (seperti cara ke rja .env laravel) <br>
 [✅] API Login + Tokenize / JWT <br>
-[🅿️] Session & Login <br>
-[🅿️] CRUD Admin <br>
-[🅿️] Email SMTP <br>
-[🅿️] Unit Testing <br>
-[🅿️] Import XLS <br>
-[🅿️] Export XLS <br>
+[✅] CRUD Admin <br>
+[✅] Session & Login <br>
+[✅] Email SMTP <br>
+[✅] Export XLS <br>
+[✅] Import XLS <br>
 [🅿️] Export PDF <br>
+[🅿️] Unit Testing <br>
 [🅿️] Deploy
 
 Golang Gin Docomentation https://github.com/gin-gonic/gin

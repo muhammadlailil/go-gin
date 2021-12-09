@@ -11,9 +11,10 @@ import (
 
 type JwtTokenData struct {
 	Scope   string `json:"scope"`
-	UsersId int64 `json:"users_id"`
+	UsersId int8   `json:"users_id"`
 	Email   string `json:"email"`
 }
+
 func GenerateToken(data *JwtTokenData) (string, error) {
 
 	token_lifespan := 24 // (satuan jam)
@@ -85,13 +86,13 @@ func Data(tokenString string) (*JwtTokenData, error) {
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
 		dataToken := claims["data"].(map[string]interface{})
-		idfloat := dataToken["users_id"].(float64);
+		idfloat := dataToken["users_id"].(float64)
 		data.Scope = dataToken["scope"].(string)
-		if(idfloat!=0) {
-			data.UsersId = dataToken["users_id"].(int64)
+		if idfloat != 0 {
+			data.UsersId = dataToken["users_id"].(int8)
 		}
 		data.Email = dataToken["email"].(string)
-		return data,err
+		return data, err
 	}
-	return data,err
+	return data, err
 }
