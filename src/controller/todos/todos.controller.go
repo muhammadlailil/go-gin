@@ -95,7 +95,7 @@ func PostImportTodo(c *gin.Context) {
 	var (
 		db       = database.InitDB(c)
 		file, _  = c.FormFile("file")
-		filename = "./assets/uploads/import_file." + filepath.Ext(file.Filename)
+		filename = "./uploads/import_file." + filepath.Ext(file.Filename)
 		err      = c.SaveUploadedFile(file, filename)
 	)
 
@@ -139,13 +139,13 @@ func GetExportTodo(c *gin.Context) {
 			log.Fatal("ERROR", err.Error())
 		}
 		for i, row := range todos {
-			//status := strconv.FormatBool(row.Completed)
-			//if !row.Completed {
-			//	status = "Progress"
-			//}
+			status := strconv.FormatBool(row.Completed)
+			if !row.Completed {
+				status = "Progress"
+			}
 			xlsx.SetCellValue(sheet1Name, fmt.Sprintf("A%d", i+2), row.ID)
 			xlsx.SetCellValue(sheet1Name, fmt.Sprintf("B%d", i+2), row.Title)
-			xlsx.SetCellValue(sheet1Name, fmt.Sprintf("C%d", i+2), row.Completed)
+			xlsx.SetCellValue(sheet1Name, fmt.Sprintf("C%d", i+2), status)
 		}
 		fmt.Println("done loop")
 		var w = c.Writer

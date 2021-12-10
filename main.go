@@ -23,6 +23,7 @@ func main() {
 
 	apps.LoadHTMLGlob("templates/**/*.html") //https://hoohoo.top/blog/20210530112304-golang-tutorial-introduction-gin-html-template-and-how-integration-with-bootstrap/
 	apps.Static("/assets", "./assets")
+	apps.Static("/uploads", "./uploads")
 
 	apps.GET("/login", logincontroller.GetIndex)
 	apps.POST("/login", logincontroller.PostLogin)
